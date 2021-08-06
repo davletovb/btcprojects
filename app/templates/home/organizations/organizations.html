@@ -1,0 +1,59 @@
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}Organizations{% endblock %}
+{% block body %}
+    <div class="content-section">
+        <div class="outer">
+            <div class="middle">
+                <div class="inner">
+                    <br/>
+                    {{ utils.flashed_messages() }}
+                    <br/>
+                    <h1 style="text-align:center;">Organizations</h1>
+                    {% if organizations %}
+                        <hr class="intro-divider">
+                        <div class="center">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th width="15%"> Name</th>
+                                    <th width="30%"> Description</th>
+                                    <th width="10%"> Location</th>
+                                    <th width="25%"> Categories</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for organization in organizations %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ url_for('home.organization', id=organization.id) }}">
+                                                {{ organization.name }}
+                                            </a>
+                                        </td>
+                                        <td> {{ organization.description }} </td>
+                                        <td> {{ organization.location }} </td>
+                                        <td>
+                                            {%for item in organization.categories%}
+                                                {{item}}
+                                                {% if not loop.last %}
+                                                    ,
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="text-align: center">
+                    {% else %}
+                        <div style="text-align: center">
+                        <h3> No organizations have been added. </h3>
+                        <hr class="intro-divider">
+                    {% endif %}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
